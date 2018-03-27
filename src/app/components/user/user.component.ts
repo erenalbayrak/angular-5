@@ -12,6 +12,7 @@ export class UserComponent implements OnInit {
   users: User[];
   showExtended: boolean;
   loaded: boolean;
+  enableAdd: boolean;
 
   numberArray: number[];
   mixedArray: any[];
@@ -25,6 +26,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.loaded = false;
     this.showExtended = true;
+    this.enableAdd = true;
 
     this.users = [
       {
@@ -35,7 +37,8 @@ export class UserComponent implements OnInit {
           street: "Winkelgasse 7",
           city: "London",
           state: "K.A."
-        }
+        },
+        image: "http://lorempixel.com/600/600/people/3"
       },
       {
         firstName: "Maggi",
@@ -45,7 +48,8 @@ export class UserComponent implements OnInit {
           street: "Winkelgasse 69",
           city: "London",
           state: "K.A."
-        }
+        },
+        image: "http://lorempixel.com/600/600/people/2"
       },
       {
         firstName: "Carol",
@@ -55,7 +59,8 @@ export class UserComponent implements OnInit {
           street: "Torweg 12",
           city: "Frankfurt",
           state: "Hessen"
-        }
+        },
+        image: "http://lorempixel.com/600/600/people/1"
       }
     ];
 
