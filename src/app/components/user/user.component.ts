@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
   showExtended: boolean;
   loaded: boolean;
   enableAdd: boolean;
+  currentClasses = {};
 
   numberArray: number[];
   mixedArray: any[];
@@ -38,7 +39,8 @@ export class UserComponent implements OnInit {
           city: "London",
           state: "K.A."
         },
-        image: "http://lorempixel.com/600/600/people/3"
+        image: "http://lorempixel.com/600/600/people/3",
+        isActive: true
       },
       {
         firstName: "Maggi",
@@ -49,7 +51,8 @@ export class UserComponent implements OnInit {
           city: "London",
           state: "K.A."
         },
-        image: "http://lorempixel.com/600/600/people/2"
+        image: "http://lorempixel.com/600/600/people/2",
+        isActive: false
       },
       {
         firstName: "Carol",
@@ -60,7 +63,8 @@ export class UserComponent implements OnInit {
           city: "Frankfurt",
           state: "Hessen"
         },
-        image: "http://lorempixel.com/600/600/people/1"
+        image: "http://lorempixel.com/600/600/people/1",
+        isActive: true
       }
     ];
 
@@ -74,11 +78,20 @@ export class UserComponent implements OnInit {
       age: 41
     };
     this.addUser(newUserWithoutOptionalParams);
+
     this.loaded = true;
+    this.setCurrentClasses();
   }
 
   addUser(user: User): void {
     this.users.push(user);
+  }
+
+  setCurrentClasses(): void {
+    this.currentClasses = {
+      "btn-success": this.enableAdd,
+      "big-text": this.showExtended
+    };
   }
 
   sayHello(): void {
