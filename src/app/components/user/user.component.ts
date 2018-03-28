@@ -13,6 +13,8 @@ export class UserComponent implements OnInit {
   showExtended: boolean;
   loaded: boolean;
   enableAdd: boolean;
+  showUserForm: boolean;
+
   currentClasses = {};
   currentStyles = {};
 
@@ -29,6 +31,7 @@ export class UserComponent implements OnInit {
     this.loaded = false;
     this.showExtended = true;
     this.enableAdd = true;
+    this.showUserForm = false;
 
     this.users = [
       {
@@ -41,7 +44,10 @@ export class UserComponent implements OnInit {
           state: "K.A."
         },
         image: "http://lorempixel.com/600/600/people/3",
-        isActive: true
+        isActive: true,
+        balance: 100,
+        registered: new Date("01/02/2018 08:30:00"),
+        hide: true
       },
       {
         firstName: "Maggi",
@@ -53,7 +59,10 @@ export class UserComponent implements OnInit {
           state: "K.A."
         },
         image: "http://lorempixel.com/600/600/people/2",
-        isActive: false
+        isActive: false,
+        balance: 2200,
+        registered: new Date("05/07/2011 10:14:10"),
+        hide: true
       },
       {
         firstName: "Carol",
@@ -65,7 +74,10 @@ export class UserComponent implements OnInit {
           state: "Hessen"
         },
         image: "http://lorempixel.com/600/600/people/1",
-        isActive: true
+        isActive: true,
+        balance: 450,
+        registered: new Date("03/02/2007 10:30:00"),
+        hide: true
       }
     ];
 
@@ -76,7 +88,8 @@ export class UserComponent implements OnInit {
     const newUserWithoutOptionalParams: User = {
       firstName: "El",
       lastName: "Homo",
-      age: 41
+      age: 41,
+      isActive: true
     };
     this.addUser(newUserWithoutOptionalParams);
 
@@ -101,6 +114,20 @@ export class UserComponent implements OnInit {
       "padding-top": this.showExtended ? "0" : "40px",
       "font-size": this.showExtended ? "" : "40px"
     };
+  }
+
+  fireEvent(event) {
+    console.log(event);
+  }
+
+  toggleHide(user: User) {
+      user.hide = !user.hide;
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+
   }
 
   sayHello(): void {
