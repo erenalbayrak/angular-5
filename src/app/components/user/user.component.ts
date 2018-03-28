@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
   loaded: boolean;
   enableAdd: boolean;
   currentClasses = {};
+  currentStyles = {};
 
   numberArray: number[];
   mixedArray: any[];
@@ -81,6 +82,7 @@ export class UserComponent implements OnInit {
 
     this.loaded = true;
     this.setCurrentClasses();
+    this.setCurrentStyles();
   }
 
   addUser(user: User): void {
@@ -91,6 +93,13 @@ export class UserComponent implements OnInit {
     this.currentClasses = {
       "btn-success": this.enableAdd,
       "big-text": this.showExtended
+    };
+  }
+
+  setCurrentStyles() {
+    this.currentStyles = {
+      "padding-top": this.showExtended ? "0" : "40px",
+      "font-size": this.showExtended ? "" : "40px"
     };
   }
 
