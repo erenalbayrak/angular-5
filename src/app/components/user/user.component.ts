@@ -11,13 +11,13 @@ import {DataService} from "../../service/data.service";
 })
 export class UserComponent implements OnInit {
 
-  user: User;
+  user = this.getEmptyUserObj();
   users: User[];
 
-  showExtended: boolean;
-  loaded: boolean;
-  enableAdd: boolean;
-  showUserForm: boolean;
+  showExtended = true;
+  loaded = false;
+  enableAdd = false;
+  showUserForm = false;
 
   @ViewChild("userForm")
   form: any;
@@ -29,19 +29,24 @@ export class UserComponent implements OnInit {
   mixedArray: any[];
   myTupel: [string, number, boolean];
 
+  data: any;
+
   // Use constructor to inject dependencies
   constructor(private dataService: DataService) {
   }
 
   // Use ngOnInit to fill properties, ajax/service calls
   ngOnInit() {
-    this.loaded = false;
-    this.showExtended = true;
-    this.enableAdd = false;
-    this.showUserForm = false;
 
-    this.user = this.getEmptyUserObj();
-    this.users = this.dataService.getUsers();
+    // for experimental
+    this.dataService.getData().subscribe(data => {
+      console.log(data);
+    });
+
+    this.dataService.getUsers().subscribe(value => {
+      this.users = value;
+      this.loaded = true;
+    });
 
     this.numberArray = [14, 8, 96, 45];
     this.mixedArray = [true, undefined, "OK", 77];
@@ -56,7 +61,6 @@ export class UserComponent implements OnInit {
     };
     this.dataService.addUser(newUserWithoutOptionalParams);
 
-    this.loaded = true;
     this.setCurrentClasses();
     this.setCurrentStyles();
   }
