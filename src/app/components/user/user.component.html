@@ -34,10 +34,16 @@
       <div [hidden]="!userEmail.errors?.required" class="invalid-feedback">E-Mail required.</div>
       <div [hidden]="!userEmail.errors?.pattern" class="invalid-feedback">Invalid E-Mail.</div>
 
-      <label>Age</label> <input [(ngModel)]="user.age" type="number" class="form-control" name="age">
-      <label>Street</label> <input [(ngModel)]="user.address.street" type="text" class="form-control" name="street">
-      <label>City</label> <input [(ngModel)]="user.address.city" type="text" class="form-control" name="city">
-      <label>State</label> <input [(ngModel)]="user.address.state" type="text" class="form-control" name="State">
+      <label>Age</label>
+      <input [(ngModel)]="user.age" type="number" class="form-control" name="age">
+      <label>Street</label>
+      <input [(ngModel)]="user.address.street" type="text" class="form-control" name="street">
+
+      <label>City</label>
+      <input [(ngModel)]="user.address.city" type="text" class="form-control" name="city">
+
+      <label>State</label>
+      <input [(ngModel)]="user.address.state" type="text" class="form-control" name="state">
     </div>
     {{user.firstName}}
     <button [disabled]="!userForm.form.valid"
@@ -61,17 +67,17 @@
         <h3 [ngStyle]="currentStyles">
           {{user.firstName}} {{user.lastName | uppercase}}
           <!-- + Icon for toggleHide to show/hide extendet data. -->
-          <small *ngIf="user.age && user.address"> <!-- Just show icon if there is extended data available. -->
+          <small *ngIf="user.age && !(user.address?.street.length == 0)"> <!-- Just show icon if there is extended data available. -->
             <button (click)="toggleHide(user)" class="btn btn-dark btn-sm">
               <i class="fa fa-plus" [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i>
           </button></small>
         </h3>
         <ul class="list-group"><li class="list-group-item">E-Mail: {{user.email}}</li></ul>
-        <ul *ngIf="!user.hide && showExtended && user.age && user.address" class="list-group">
+        <ul *ngIf="!user.hide && showExtended && user?.age && !(user.address?.street.length == 0)" class="list-group">
           <li class="list-group-item">Age: {{user.age}}</li>
-          <li class="list-group-item">Address: {{user.address.street}}, {{user.address.city}}, {{user.address.state}}</li>
-          <li class="list-group-item">Balance: {{user.balance | currency:"EUR":"symbol"}}</li>
-          <li class="list-group-item">Joined: {{user.registered | date:"dd.mm.yyyy"}}</li>
+          <li class="list-group-item">Address: {{user.address?.street}}, {{user.address?.city}}, {{user.address?.state}}</li>
+          <li class="list-group-item">Balance: {{user?.balance | currency:"EUR":"symbol"}}</li>
+          <li class="list-group-item">Joined: {{user?.registered | date:"dd.mm.yyyy"}}</li>
           <li class="list-group-item" ngNonBindable><pre>{{5 | number:"2.4"}}</pre></li>
         </ul>
       </div>

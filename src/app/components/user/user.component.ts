@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {User} from "../../models/User";
+import {log} from "util";
 
 @Component({
   selector: 'app-user',
@@ -16,6 +17,9 @@ export class UserComponent implements OnInit {
   loaded: boolean;
   enableAdd: boolean;
   showUserForm: boolean;
+
+  @ViewChild("userForm")
+  form: any;
 
   currentClasses = {};
   currentStyles = {};
@@ -109,12 +113,31 @@ export class UserComponent implements OnInit {
     this.users.push(user);
   }
 
-  onSubmit(/*event*/) {
-    // event.preventDefault(); nicht nötig bei (ngSubmit)
-    this.user.isActive = true;
+  // onSubmit(event) {
+  // event.preventDefault(); nicht nötig bei (ngSubmit)
+  onSubmit({value, valid}: {value: User, valid: boolean}) {
+    if (!valid) {
+      console.log("Form not valid.");
+    }
+    else {
+      value.isActive = true;
+      value.hide = true;
+      value.registered = new Date();
+
+      // Workaround
+      console.log(value);
+      value.address = this.getEmptyAddress();
+      value.address.street = this.user.address.street;
+      value.address.city = value["city"];
+      value.address.state = value["state"];
+
+      this.users.unshift(value);
+      this.form.reset();
+    }
+    /* this.user.isActive = true;
     this.user.registered = new Date();
     this.users.unshift(this.user);
-    this.user = this.getEmptyUserObj();
+    this.user = this.getEmptyUserObj(); */
   }
 
   private getEmptyUserObj(): User {
@@ -131,6 +154,16 @@ export class UserComponent implements OnInit {
     };
     return user;
   }
+
+  getEmptyAddress(): User["address"] {
+    const  address: User["address"] = {
+      street: "",
+      city: "",
+      state: ""
+    };
+    return address;
+  }
+
 
   setCurrentClasses(): void {
     this.currentClasses = {
