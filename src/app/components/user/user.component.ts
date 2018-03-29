@@ -40,6 +40,7 @@ export class UserComponent implements OnInit {
       {
         firstName: "Eren Ömer",
         lastName: "Albayrak",
+        email: "asd@xcv.de",
         age: 25,
         address: {
           street: "Winkelgasse 7",
@@ -55,6 +56,7 @@ export class UserComponent implements OnInit {
       {
         firstName: "Maggi",
         lastName: "Müller",
+        email: "tzu@cvb.zh",
         age: 24,
         address: {
           street: "Winkelgasse 69",
@@ -70,6 +72,7 @@ export class UserComponent implements OnInit {
       {
         firstName: "Carol",
         lastName: "Ann",
+        email: "fgh@oz.de",
         age: 22,
         address: {
           street: "Torweg 12",
@@ -92,6 +95,7 @@ export class UserComponent implements OnInit {
       firstName: "El",
       lastName: "Homo",
       age: 41,
+      email: "nhz@ol.rev",
       isActive: true
     };
     this.addUser(newUserWithoutOptionalParams);
@@ -105,7 +109,8 @@ export class UserComponent implements OnInit {
     this.users.push(user);
   }
 
-  addUserFromForm(): void {
+  onSubmit(/*event*/) {
+    // event.preventDefault(); nicht nötig bei (ngSubmit)
     this.user.isActive = true;
     this.user.registered = new Date();
     this.users.unshift(this.user);
@@ -116,6 +121,7 @@ export class UserComponent implements OnInit {
     const user: User = {
       firstName: "",
       lastName: "",
+      email: "",
       age: null,
       address: {
         street: "",
@@ -142,10 +148,6 @@ export class UserComponent implements OnInit {
 
   toggleHide(user: User) {
       user.hide = !user.hide;
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
   }
 
   sayHello(): void {

@@ -2,18 +2,45 @@
         class="btn btn-dark mb-3">Add User</button>
 <div *ngIf="showUserForm" class="card card-body mb-3">
   <h2>Add User</h2>
-  <form (submit)="onSubmit($event)">
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
     <div class="form-group">
-      <label>First Name</label> <input [(ngModel)]="user.firstName" type="text" class="form-control" name="firstName">
-      <label>Last Name</label> <input [(ngModel)]="user.lastName" type="text" class="form-control" name="lastName">
+      <label>First Name</label>
+      <input #userFirstName="ngModel"
+             [(ngModel)]="user.firstName"
+             type="text" class="form-control" name="firstName"
+             [ngClass]="{'is-invalid' : userFirstName.errors && userFirstName.touched}"
+             required
+             minlength="2">
+      <div [hidden]="!userFirstName.errors?.required" class="invalid-feedback">First name required.</div>
+      <div [hidden]="!userFirstName.errors?.minlength" class="invalid-feedback">At least 2 chars.</div>
+
+      <label>Last Name</label>
+      <input #userLastName="ngModel"
+             [(ngModel)]="user.lastName"
+             type="text" class="form-control" name="lastName"
+             [ngClass]="userLastName.errors && userLastName.touched ? 'is-invalid' : ''"
+             required
+             minlength="2">
+      <div [hidden]="!userLastName.errors?.required" class="invalid-feedback">Last name required.</div>
+      <div [hidden]="!userLastName.errors?.minlength" class="invalid-feedback">At least 2 chars.</div>
+
+      <label>E-Mail</label>
+      <input #userEmail="ngModel"
+             [(ngModel)]="user.email"
+             type="email" class="form-control" name="email"
+             [ngClass]="userEmail.errors && userEmail.touched ? 'is-invalid' : ''"
+             required
+             pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?">
+      <div [hidden]="!userEmail.errors?.required" class="invalid-feedback">E-Mail required.</div>
+      <div [hidden]="!userEmail.errors?.pattern" class="invalid-feedback">Invalid E-Mail.</div>
+
       <label>Age</label> <input [(ngModel)]="user.age" type="number" class="form-control" name="age">
       <label>Street</label> <input [(ngModel)]="user.address.street" type="text" class="form-control" name="street">
       <label>City</label> <input [(ngModel)]="user.address.city" type="text" class="form-control" name="city">
       <label>State</label> <input [(ngModel)]="user.address.state" type="text" class="form-control" name="State">
     </div>
     {{user.firstName}}
-    <button (click)="addUserFromForm()"
-            [disabled]="user.firstName == '' || user.lastName == ''"
+    <button [disabled]="!userForm.form.valid"
             class="btn btn-block mb-3"
             [ngClass]="currentClasses">
       Add New User
@@ -39,6 +66,7 @@
               <i class="fa fa-plus" [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i>
           </button></small>
         </h3>
+        <ul class="list-group"><li class="list-group-item">E-Mail: {{user.email}}</li></ul>
         <ul *ngIf="!user.hide && showExtended && user.age && user.address" class="list-group">
           <li class="list-group-item">Age: {{user.age}}</li>
           <li class="list-group-item">Address: {{user.address.street}}, {{user.address.city}}, {{user.address.state}}</li>
