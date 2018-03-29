@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {User} from "../../models/User";
 import {log} from "util";
+import {DataService} from "../../service/data.service";
 
 @Component({
   selector: 'app-user',
@@ -11,8 +12,8 @@ import {log} from "util";
 export class UserComponent implements OnInit {
 
   user: User;
-
   users: User[];
+
   showExtended: boolean;
   loaded: boolean;
   enableAdd: boolean;
@@ -29,7 +30,7 @@ export class UserComponent implements OnInit {
   myTupel: [string, number, boolean];
 
   // Use constructor to inject dependencies
-  constructor() {
+  constructor(private dataService: DataService) {
   }
 
   // Use ngOnInit to fill properties, ajax/service calls
@@ -40,56 +41,7 @@ export class UserComponent implements OnInit {
     this.showUserForm = false;
 
     this.user = this.getEmptyUserObj();
-    this.users = [
-      {
-        firstName: "Eren Ömer",
-        lastName: "Albayrak",
-        email: "asd@xcv.de",
-        age: 25,
-        address: {
-          street: "Winkelgasse 7",
-          city: "London",
-          state: "K.A."
-        },
-        image: "http://lorempixel.com/600/600/people/3",
-        isActive: true,
-        balance: 100,
-        registered: new Date("01/02/2018 08:30:00"),
-        hide: true
-      },
-      {
-        firstName: "Maggi",
-        lastName: "Müller",
-        email: "tzu@cvb.zh",
-        age: 24,
-        address: {
-          street: "Winkelgasse 69",
-          city: "London",
-          state: "K.A."
-        },
-        image: "http://lorempixel.com/600/600/people/2",
-        isActive: false,
-        balance: 2200,
-        registered: new Date("05/07/2011 10:14:10"),
-        hide: true
-      },
-      {
-        firstName: "Carol",
-        lastName: "Ann",
-        email: "fgh@oz.de",
-        age: 22,
-        address: {
-          street: "Torweg 12",
-          city: "Frankfurt",
-          state: "Hessen"
-        },
-        image: "http://lorempixel.com/600/600/people/1",
-        isActive: true,
-        balance: 450,
-        registered: new Date("03/02/2007 10:30:00"),
-        hide: true
-      }
-    ];
+    this.users = this.dataService.getUsers();
 
     this.numberArray = [14, 8, 96, 45];
     this.mixedArray = [true, undefined, "OK", 77];
@@ -102,15 +54,11 @@ export class UserComponent implements OnInit {
       email: "nhz@ol.rev",
       isActive: true
     };
-    this.addUser(newUserWithoutOptionalParams);
+    this.dataService.addUser(newUserWithoutOptionalParams);
 
     this.loaded = true;
     this.setCurrentClasses();
     this.setCurrentStyles();
-  }
-
-  addUser(user: User): void {
-    this.users.push(user);
   }
 
   // onSubmit(event) {
@@ -131,7 +79,7 @@ export class UserComponent implements OnInit {
       value.address.city = value["city"];
       value.address.state = value["state"];
 
-      this.users.unshift(value);
+      this.dataService.addUser(value);
       this.form.reset();
     }
     /* this.user.isActive = true;
