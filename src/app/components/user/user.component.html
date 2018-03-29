@@ -4,15 +4,16 @@
   <h2>Add User</h2>
   <form (submit)="onSubmit($event)">
     <div class="form-group">
-      <label>First Name</label> <input type="text" class="form-control" name="firstName">
-      <label>Last Name</label> <input type="text" class="form-control" name="lastName">
-      <label>Age</label> <input type="number" class="form-control" name="age">
-      <label>Street</label> <input type="text" class="form-control" name="street">
-      <label>City</label> <input type="text" class="form-control" name="city">
-      <label>State</label> <input type="text" class="form-control" name="State">
+      <label>First Name</label> <input [(ngModel)]="user.firstName" type="text" class="form-control" name="firstName">
+      <label>Last Name</label> <input [(ngModel)]="user.lastName" type="text" class="form-control" name="lastName">
+      <label>Age</label> <input [(ngModel)]="user.age" type="number" class="form-control" name="age">
+      <label>Street</label> <input [(ngModel)]="user.address.street" type="text" class="form-control" name="street">
+      <label>City</label> <input [(ngModel)]="user.address.city" type="text" class="form-control" name="city">
+      <label>State</label> <input [(ngModel)]="user.address.state" type="text" class="form-control" name="State">
     </div>
-    <button (click)="fireEvent($event)"
-            [disabled]="!enableAdd"
+    {{user.firstName}}
+    <button (click)="addUserFromForm()"
+            [disabled]="user.firstName == '' || user.lastName == ''"
             class="btn btn-block mb-3"
             [ngClass]="currentClasses">
       Add New User

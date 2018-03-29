@@ -9,6 +9,8 @@ import {User} from "../../models/User";
 })
 export class UserComponent implements OnInit {
 
+  user: User;
+
   users: User[];
   showExtended: boolean;
   loaded: boolean;
@@ -30,9 +32,10 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.loaded = false;
     this.showExtended = true;
-    this.enableAdd = true;
+    this.enableAdd = false;
     this.showUserForm = false;
 
+    this.user = this.getEmptyUserObj();
     this.users = [
       {
         firstName: "Eren Ömer",
@@ -102,6 +105,27 @@ export class UserComponent implements OnInit {
     this.users.push(user);
   }
 
+  addUserFromForm(): void {
+    this.user.isActive = true;
+    this.user.registered = new Date();
+    this.users.unshift(this.user);
+    this.user = this.getEmptyUserObj();
+  }
+
+  private getEmptyUserObj(): User {
+    const user: User = {
+      firstName: "",
+      lastName: "",
+      age: null,
+      address: {
+        street: "",
+        city: "",
+        state: ""
+      }
+    };
+    return user;
+  }
+
   setCurrentClasses(): void {
     this.currentClasses = {
       "btn-success": this.enableAdd,
@@ -116,18 +140,12 @@ export class UserComponent implements OnInit {
     };
   }
 
-  fireEvent(event) {
-    console.log(event);
-  }
-
   toggleHide(user: User) {
       user.hide = !user.hide;
   }
 
   onSubmit(event) {
     event.preventDefault();
-
-
   }
 
   sayHello(): void {
