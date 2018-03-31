@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {User} from "../../models/User";
-import {log} from "util";
-import {DataService} from "../../service/data.service";
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-user',
@@ -32,18 +31,18 @@ export class UserComponent implements OnInit {
   data: any;
 
   // Use constructor to inject dependencies
-  constructor(private dataService: DataService) {
+  constructor(private userService: UserService) {
   }
 
   // Use ngOnInit to fill properties, ajax/service calls
   ngOnInit() {
 
     // for experimental
-    this.dataService.getData().subscribe(data => {
+    this.userService.getData().subscribe(data => {
       console.log(data);
     });
 
-    this.dataService.getUsers().subscribe(value => {
+    this.userService.getUsers().subscribe(value => {
       this.users = value;
       this.loaded = true;
     });
@@ -59,7 +58,7 @@ export class UserComponent implements OnInit {
       email: "nhz@ol.rev",
       isActive: true
     };
-    this.dataService.addUser(newUserWithoutOptionalParams);
+    this.userService.addUser(newUserWithoutOptionalParams);
 
     this.setCurrentClasses();
     this.setCurrentStyles();
@@ -83,7 +82,7 @@ export class UserComponent implements OnInit {
       value.address.city = value["city"];
       value.address.state = value["state"];
 
-      this.dataService.addUser(value);
+      this.userService.addUser(value);
       this.form.reset();
     }
     /* this.user.isActive = true;
