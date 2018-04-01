@@ -18,6 +18,11 @@ export class PostService {
     return this.http.get<Post[]>(this.postsURL);
   }
 
+  getPost(id: number): Observable<Post> {
+    const URL = `${this.postsURL}/${id}`;
+    return this.http.get<Post>(URL);
+  }
+
   savePost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.postsURL, post, httpOptions);
   }
