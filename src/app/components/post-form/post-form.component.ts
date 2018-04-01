@@ -12,6 +12,7 @@ export class PostFormComponent implements OnInit {
   @Input() currentPost: Post;
   @Input() isEdit: boolean;
   @Output() newPost: EventEmitter<Post> = new EventEmitter();
+  @Output() updatedPost: EventEmitter<Post> = new EventEmitter();
 
   constructor(private postService: PostService) { }
 
@@ -31,6 +32,10 @@ export class PostFormComponent implements OnInit {
   }
 
   updatePost() {
-    console.log(123);
+    this.postService.updatePost(this.currentPost).subscribe(post => {
+      console.log(post);
+      this.isEdit = false;
+      this.updatedPost.emit(post);
+    });
   }
 }
