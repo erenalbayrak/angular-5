@@ -10,6 +10,8 @@ import { UserService } from './service/user.service';
 import {PostService} from "./service/post.service";
 import { PostsComponent } from './components/posts/posts.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -18,12 +20,14 @@ import { PostFormComponent } from './components/post-form/post-form.component';
     UserComponent,
     NavbarComponent,
     PostsComponent,
-    PostFormComponent
+    PostFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [UserService, PostService],
   bootstrap: [AppComponent]
